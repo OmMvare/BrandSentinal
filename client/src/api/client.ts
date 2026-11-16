@@ -1,8 +1,14 @@
 import axios from 'axios';
 
-// In production, dynamically point to Railway custom API domain; in local dev fallback to /api
+// Resolve API base URL with protocol normalization (defaults to /api for local dev proxy)
+const rawBaseUrl = (import.meta as any).env?.VITE_API_BASE_URL || '/api';
+const baseURL =
+  rawBaseUrl.startsWith('http://') || rawBaseUrl.startsWith('https://') || rawBaseUrl.startsWith('/')
+    ? rawBaseUrl
+    : `https://${rawBaseUrl}`;
+
 const api = axios.create({
-  baseURL: (import.meta as any).env?.VITE_API_BASE_URL || '/api',
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -26,7 +32,9 @@ api.interceptors.response.use(
       // Clear token if invalid
       localStorage.removeItem('brand_sentinel_token');
       localStorage.removeItem('brand_sentinel_user');
-      if (window.location.pathname !== '/login') {
+      // Do not force redirect if user is already on login or registration pages
+      const path = window.location.pathname;
+      if (path !== '/login' && path !== '/register') {
         window.location.href = '/login';
       }
     }

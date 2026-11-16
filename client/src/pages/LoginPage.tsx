@@ -61,12 +61,16 @@ export const LoginPage: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">Email Address</label>
+              <label htmlFor="login-email" className="block text-xs font-semibold text-slate-300 uppercase mb-1">
+                Email Address
+              </label>
               <div className="relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                   <Mail className="h-4 w-4" />
                 </div>
                 <input
+                  id="login-email"
+                  name="email"
                   type="email"
                   required
                   value={email}
@@ -79,12 +83,16 @@ export const LoginPage: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">Password</label>
+              <label htmlFor="login-password" className="block text-xs font-semibold text-slate-300 uppercase mb-1">
+                Password
+              </label>
               <div className="relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                   <Lock className="h-4 w-4" />
                 </div>
                 <input
+                  id="login-password"
+                  name="password"
                   type="password"
                   required
                   value={password}
@@ -120,7 +128,11 @@ export const LoginPage: React.FC = () => {
 
           <div className="mt-5 text-center pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs">
             <span className="text-slate-400">New to Brand Sentinel?</span>
-            <Link to="/register" className="text-brand-400 hover:text-brand-300 font-semibold">
+            <Link
+              to="/register"
+              onClick={() => navigate('/register')}
+              className="text-brand-400 hover:text-brand-300 font-semibold transition-colors"
+            >
               Create an account &rarr;
             </Link>
           </div>

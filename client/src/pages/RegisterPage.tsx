@@ -81,68 +81,88 @@ export const RegisterPage: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">Full Name</label>
+              <label htmlFor="register-fullName" className="block text-xs font-semibold text-slate-300 uppercase mb-1">
+                Full Name
+              </label>
               <div className="relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                   <User className="h-4 w-4" />
                 </div>
                 <input
+                  id="register-fullName"
+                  name="fullName"
                   type="text"
                   required
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="e.g. Maya Lin"
+                  autoComplete="name"
                   className="block w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">Corporate Email Address</label>
+              <label htmlFor="register-email" className="block text-xs font-semibold text-slate-300 uppercase mb-1">
+                Corporate Email Address
+              </label>
               <div className="relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                   <Mail className="h-4 w-4" />
                 </div>
                 <input
+                  id="register-email"
+                  name="email"
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="maya.lin@enterprise.com"
+                  autoComplete="email"
                   className="block w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">Password</label>
+              <label htmlFor="register-password" className="block text-xs font-semibold text-slate-300 uppercase mb-1">
+                Password
+              </label>
               <div className="relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                   <Lock className="h-4 w-4" />
                 </div>
                 <input
+                  id="register-password"
+                  name="password"
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Min. 8 alphanumeric chars"
+                  autoComplete="new-password"
                   className="block w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">Confirm Password</label>
+              <label htmlFor="register-confirmPassword" className="block text-xs font-semibold text-slate-300 uppercase mb-1">
+                Confirm Password
+              </label>
               <div className="relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                   <Lock className="h-4 w-4" />
                 </div>
                 <input
+                  id="register-confirmPassword"
+                  name="confirmPassword"
                   type="password"
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Re-enter password"
+                  autoComplete="new-password"
                   className="block w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                 />
               </div>
@@ -188,7 +208,11 @@ export const RegisterPage: React.FC = () => {
           </form>
 
           <div className="mt-5 text-center pt-3 border-t border-slate-700/60">
-            <Link to="/login" className="text-xs text-brand-400 hover:text-brand-300 font-medium">
+            <Link
+              to="/login"
+              onClick={() => navigate('/login')}
+              className="text-xs text-brand-400 hover:text-brand-300 font-medium transition-colors"
+            >
               Already have an account? Sign in here
             </Link>
           </div>

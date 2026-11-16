@@ -1,11 +1,23 @@
 import axios from 'axios';
 
-// Resolve API base URL with protocol normalization (defaults to /api for local dev proxy)
+// Resolve API base URL with protocol and /api normalization
 const rawBaseUrl = (import.meta as any).env?.VITE_API_BASE_URL || '/api';
-const baseURL =
-  rawBaseUrl.startsWith('http://') || rawBaseUrl.startsWith('https://') || rawBaseUrl.startsWith('/')
-    ? rawBaseUrl
-    : `https://${rawBaseUrl}`;
+let normalized = String(rawBaseUrl).trim();
+
+// Ensure protocol is attached if a bare domain is passed
+if (!normalized.startsWith('http://') && !normalized.startsWith('https://') && !normalized.startsWith('/')) {
+  normalized = `https://${normalized}`;
+}
+
+// Strip any trailing slash
+normalized = normalized.replace(/\/+$/, '');
+
+// Ensure /api is the suffix for backend endpoints
+if (!normalized.endsWith('/api') && !normalized.includes('/api/')) {
+  normalized = `${normalized}/api`;
+}
+
+const baseURL = normalized;
 
 const api = axios.create({
   baseURL,

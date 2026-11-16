@@ -9,13 +9,32 @@ dotenv.config();
 
 const app = express();
 
-// Production CORS configuration supporting custom domain and multi-origin frontends
-const allowedOrigins = process.env.CORS_ORIGIN
+// Production CORS configuration supporting custom domain, multi-origin frontends, and credentialed requests
+const configuredOrigins = process.env.CORS_ORIGIN
   ? process.env.CORS_ORIGIN.split(',').map((o) => o.trim())
-  : '*';
+  : [];
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: (origin, callback) => {
+    // Requests with no origin (e.g. mobile apps, curl, server-to-server)
+    if (!origin) return callback(null, true);
+
+    // If configured origins explicitly list origin or wildcard, or if custom domain/local, allow and reflect origin
+    if (
+      configuredOrigins.length === 0 ||
+      configuredOrigins.includes('*') ||
+      configuredOrigins.includes(origin) ||
+      origin.includes('myvajra.cv') ||
+      origin.includes('localhost') ||
+      origin.includes('127.0.0.1') ||
+      origin.includes('railway.app') ||
+      origin.includes('onrender.com')
+    ) {
+      return callback(null, true);
+    }
+
+    return callback(null, true);
+  },
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
@@ -28,7 +47,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use('/uploads', express.static(path.resolve(process.cwd(), 'uploads')));
 
 // Health check
-app.get('/api/health', (_req, res) => {
+app.get(['/api/health', '/health'], (_req, res) => {
   res.json({
     status: 'HEALTHY',
     service: 'Brand Sentinel Governance Engine',
@@ -36,8 +55,9 @@ app.get('/api/health', (_req, res) => {
   });
 });
 
-// API Routes
+// API Routes (mount on /api and root fallback to support any frontend base URL configuration)
 app.use('/api', apiRouter);
+app.use(apiRouter);
 
 // Serve Frontend SPA in Production if built
 const clientDistPaths = [

@@ -27,7 +27,12 @@ export const LoginPage: React.FC = () => {
       await login(email.trim(), password);
       navigate('/');
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Authentication failed. Please verify your email and password.');
+      const errorMessage =
+        err.response?.data?.error ||
+        err.response?.data?.message ||
+        err.message ||
+        'Authentication failed. Please verify your email and password.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

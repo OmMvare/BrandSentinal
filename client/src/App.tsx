@@ -56,6 +56,14 @@ export const App: React.FC = () => {
             }
           />
           <Route
+            path="/dashboard"
+            element={
+              <ProtectedLayout>
+                <DashboardPage />
+              </ProtectedLayout>
+            }
+          />
+          <Route
             path="/creator"
             element={
               <ProtectedLayout>

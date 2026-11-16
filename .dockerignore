@@ -1,0 +1,15 @@
+node_modules
+server/node_modules
+client/node_modules
+dist
+server/dist
+client/dist
+.git
+.github
+.env
+.env.*
+*.log
+*.tsbuildinfo
+brand_sentinel.db*
+uploads/*
+!uploads/.gitkeep

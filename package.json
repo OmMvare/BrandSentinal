@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Brand Sentinel — Intelligent Pre-Publication Brand Governance Platform (Team Vajra)",
   "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
     "dev:server": "npm run dev --prefix server",

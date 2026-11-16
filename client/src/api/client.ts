@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // In production, dynamically point to Railway custom API domain; in local dev fallback to /api
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  baseURL: (import.meta as any).env?.VITE_API_BASE_URL || '/api',
   headers: {
     'Content-Type': 'application/json',
   },
